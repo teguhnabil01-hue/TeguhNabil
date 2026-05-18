@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dapur Nusantara - Perangkat Masak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #b5272a;
+      --red-dark: #8c1e21;
+      --cream: #fdf6ed;
+      --brown: #5a3e2b;
+      --gold: #c9922a;
+      --text: #2b2b2b;
+      --muted: #888;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 2.5rem 1rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--brown);
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--red);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      padding: 0 1.5rem;
+      gap: 0;
+    }
+
+    nav ul li a {
+      display: block;
+      padding: 0.85rem 1.4rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
+      background: var(--red-dark);
+    }
+
+    /* MAIN LAYOUT */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.8rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.8rem;
+      align-items: start;
+    }
+
+    /* MAIN CONTENT */
+    main section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--brown);
+    }
+
+    /* HERO IMAGE */
+    .hero-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      background: #d9cfc8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* SVG placeholder kitchen scene */
+    .hero-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #3d2a1a 0%, #5a3e2b 40%, #7a5540 70%, #9e7a5a 100%);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-placeholder svg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .hero-label {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* PRODUCT CARDS */
+    .produk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .produk-card {
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .produk-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .produk-card .card-img {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .produk-card .card-body {
+      padding: 0.8rem 1rem 1rem;
+    }
+
+    .produk-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--brown);
+      margin-bottom: 0.3rem;
+    }
+
+    .produk-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+    }
+
+    .produk-card .harga {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 0.95rem;
+    }
+
+    .btn-beli {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.45rem 1rem;
+      border-radius: 3px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+
+    .btn-beli:hover { background: var(--red-dark); }
+
+    /* PROMO BANNER */
+    .promo-banner {
+      margin-top: 1.8rem;
+      background: var(--gold);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .promo-banner span.icon { font-size: 2rem; }
+
+    .promo-banner p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .promo-banner strong {
+      font-size: 1rem;
+      display: block;
+    }
+
+    /* SIDEBAR */
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .sidebar-card {
+      background: #fff;
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    .sidebar-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--brown);
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-card .tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-logo {
+      width: 100%;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    .sidebar-logo svg {
+      width: 110px;
+      height: 80px;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.8rem;
+    }
+
+    .info-table caption {
+      font-weight: 700;
+      text-align: left;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--brown);
+    }
+
+    .info-table tr td {
+      padding: 0.28rem 0;
+      font-size: 0.85rem;
+      vertical-align: top;
+    }
+
+    .info-table tr td:first-child {
+      color: var(--muted);
+      width: 70px;
+      font-weight: 600;
+    }
+
+    /* KATEGORI LIST */
+    .kategori-list {
+      list-style: none;
+    }
+
+    .kategori-list li {
+      border-bottom: 1px solid #f0e8dc;
+      padding: 0.5rem 0;
+    }
+
+    .kategori-list li:last-child { border-bottom: none; }
+
+    .kategori-list li a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.2s;
+    }
+
+    .kategori-list li a:hover { color: var(--red); }
+
+    .kategori-list li a span {
+      font-size: 0.75rem;
+      background: var(--cream);
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 2px 8px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--brown);
+      color: #d4bfa3;
+      text-align: center;
+      padding: 1.4rem;
+      font-size: 0.82rem;
+      margin-top: 2.5rem;
+    }
+
+    footer strong { color: #fff; }
+
+    @media (max-width: 780px) {
+      .container { grid-template-columns: 1fr; }
+      .produk-grid { grid-template-columns: repeat(2, 1fr); }
+      header h1 { font-size: 1.7rem; }
+    }
+
+    @media (max-width: 480px) {
+      .produk-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Dapur Nusantara</h1>
+    <p>Kualitas terbaik untuk dapur impian Anda — perangkat masak pilihan keluarga Indonesia</p>
+  </header>
+
+  <nav aria-label="Menu Utama">
+    <ul>
+      <li><a href="#beranda" class="active">Beranda</a></li>
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <main>
+      <section id="beranda" aria-label="Beranda">
+        <h2>Beranda</h2>
+
+        <!-- Hero Visual -->
+        <div class="hero-placeholder" role="img" aria-label="Peralatan masak lengkap">
+          <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Background shelves -->
+            <rect x="0" y="0" width="900" height="500" fill="url(#kitchenBg)"/>
+            <defs>
+              <linearGradient id="kitchenBg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#3d2a1a"/>
+                <stop offset="100%" stop-color="#7a5540"/>
+              </linearGradient>
+            </defs>
+            <!-- Shelves -->
+            <rect x="30" y="60" width="840" height="14" rx="4" fill="#4a3220"/>
+            <rect x="30" y="180" width="840" height="14" rx="4" fill="#4a3220"/>
+            <rect x="30" y="300" width="840" height="14" rx="4" fill="#4a3220"/>
+
+            <!-- Pots row 1 -->
+            <ellipse cx="100" cy="60" rx="38" ry="10" fill="#c0392b"/>
+            <rect x="62" y="20" width="76" height="42" rx="6" fill="#c0392b"/>
+            <rect x="50" y="38" width="12" height="7" rx="3" fill="#888"/>
+            <rect x="138" y="38" width="12" height="7" rx="3" fill="#888"/>
+
+            <ellipse cx="220" cy="60" rx="44" ry="12" fill="#2c3e50"/>
+            <rect x="176" y="15" width="88" height="47" rx="7" fill="#2c3e50"/>
+            <rect x="164" y="33" width="12" height="7" rx="3" fill="#888"/>
+            <rect x="264" y="33" width="12" height="7" rx="3" fill="#888"/>
+
+            <ellipse cx="355" cy="60" rx="36" ry="9" fill="#e67e22"/>
+            <rect x="319" y="22" width="72" height="40" rx="5" fill="#e67e22"/>
+            <rect x="307" y="38" width="12" height="7" rx="3" fill="#888"/>
+            <rect x="391" y="38" width="12" height="7" rx="3" fill="#888"/>
+
+            <!-- Wok / pan -->
+            <ellipse cx="490" cy="50" rx="60" ry="15" fill="#555"/>
+            <rect x="490" y="35" width="100" height="8" rx="3" fill="#555"/>
+            <ellipse cx="490" cy="57" rx="60" ry="8" fill="#444"/>
+
+            <!-- Glass jar -->
+            <rect x="620" y="10" width="45" height="55" rx="8" fill="rgba(200,230,255,0.25)" stroke="#aac" stroke-width="2"/>
+            <rect x="629" y="5" width="27" height="10" rx="3" fill="#777"/>
+
+            <!-- Spatulas / utensils -->
+            <rect x="730" y="5" width="6" height="60" rx="3" fill="#a0522d"/>
+            <ellipse cx="733" cy="5" rx="8" ry="4" fill="#c0c0c0"/>
+            <rect x="750" y="5" width="6" height="60" rx="3" fill="#a0522d"/>
+            <path d="M753 5 Q762 15 753 25" stroke="#c0c0c0" stroke-width="3" fill="none"/>
+            <rect x="770" y="5" width="5" height="65" rx="2" fill="#a0522d"/>
+            <path d="M760 65 h30" stroke="#c0c0c0" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Row 2: cutting boards, bowls -->
+            <rect x="50" y="120" width="60" height="65" rx="5" fill="#c9a96e"/>
+            <rect x="56" y="126" width="48" height="53" rx="3" fill="#b8955a"/>
+
+            <ellipse cx="200" cy="165" rx="50" ry="14" fill="#c0392b" opacity=".85"/>
+            <path d="M150 165 Q150 130 200 128 Q250 130 250 165 Z" fill="#e74c3c" opacity=".85"/>
+
+            <ellipse cx="320" cy="168" rx="40" ry="10" fill="#2980b9" opacity=".8"/>
+            <path d="M280 168 Q280 140 320 138 Q360 140 360 168 Z" fill="#3498db" opacity=".8"/>
+
+            <!-- Kettle silhouette -->
+            <ellipse cx="460" cy="178" rx="36" ry="10" fill="#555"/>
+            <path d="M424 155 Q424 130 460 128 Q496 130 496 155 L496 178 L424 178 Z" fill="#666"/>
+            <path d="M496 148 Q510 148 510 165 Q510 178 496 178" stroke="#555" stroke-width="6" fill="none"/>
+            <rect x="445" y="122" width="30" height="10" rx="5" fill="#777"/>
+
+            <!-- Row 3: gas stove illustration -->
+            <rect x="30" y="310" width="440" height="175" rx="10" fill="#1a1a1a"/>
+            <rect x="45" y="320" width="410" height="155" rx="8" fill="#222"/>
+            <!-- Burners -->
+            <ellipse cx="155" cy="400" rx="55" ry="55" fill="#333"/>
+            <ellipse cx="155" cy="400" rx="42" ry="42" fill="#2a2a2a"/>
+            <ellipse cx="155" cy="400" rx="12" ry="12" fill="#1a1a1a"/>
+            <ellipse cx="345" cy="400" rx="55" ry="55" fill="#333"/>
+            <ellipse cx="345" cy="400" rx="42" ry="42" fill="#2a2a2a"/>
+            <ellipse cx="345" cy="400" rx="12" ry="12" fill="#1a1a1a"/>
+            <!-- Knobs -->
+            <circle cx="100" cy="338" r="12" fill="#444"/>
+            <circle cx="100" cy="338" r="7" fill="#333"/>
+            <circle cx="155" cy="338" r="12" fill="#444"/>
+            <circle cx="155" cy="338" r="7" fill="#333"/>
+            <circle cx="210" cy="338" r="12" fill="#444"/>
+            <circle cx="210" cy="338" r="7" fill="#333"/>
+
+            <!-- Cooking pan on stove -->
+            <ellipse cx="345" cy="370" rx="70" ry="20" fill="#888"/>
+            <rect x="345" y="350" width="110" height="14" rx="3" fill="#777"/>
+            <ellipse cx="345" cy="365" rx="70" ry="10" fill="#999"/>
+
+            <!-- Blender right -->
+            <rect x="540" y="310" width="70" height="140" rx="8" fill="#ddd"/>
+            <rect x="550" y="315" width="50" height="90" rx="4" fill="rgba(200,230,255,0.4)" stroke="#bbb" stroke-width="1.5"/>
+            <rect x="540" y="400" width="70" height="50" rx="6" fill="#bbb"/>
+            <circle cx="555" cy="415" r="6" fill="#fff"/>
+            <circle cx="575" cy="415" r="6" fill="#fff"/>
+            <circle cx="595" cy="415" r="6" fill="#fff"/>
+            <circle cx="555" cy="435" r="6" fill="#fff"/>
+            <circle cx="575" cy="435" r="6" fill="#fff"/>
+
+            <!-- Rice cooker -->
+            <ellipse cx="720" cy="460" rx="70" ry="15" fill="#888"/>
+            <path d="M650 440 Q650 330 720 330 Q790 330 790 440 L790 460 L650 460 Z" fill="#c9392b"/>
+            <ellipse cx="720" cy="340" rx="60" ry="15" fill="#b0392b"/>
+            <rect cx="720" cy="440" x="695" y="435" width="50" height="30" rx="3" fill="#a0392b"/>
+            <rect x="700" y="443" width="20" height="8" rx="2" fill="#fff" opacity=".4"/>
+            <rect x="728" y="443" width="20" height="8" rx="2" fill="#fff" opacity=".4"/>
+
+            <!-- Logo overlay -->
+            <text x="450" y="260" text-anchor="middle" font-family="serif" font-size="38" fill="rgba(255,255,255,0.18)" font-weight="bold">DAPUR NUSANTARA</text>
+          </svg>
+          <div class="hero-label">
+            🍳 Perangkat Masak<br/>Terlengkap & Terpercaya
+          </div>
+        </div>
+
+        <!-- Promo Banner -->
+        <div class="promo-banner" role="note">
+          <span class="icon">🎉</span>
+          <p>
+            <strong>Promo Spesial Bulan Ini!</strong>
+            Diskon hingga 30% untuk pembelian peralatan masak pilihan. Gratis ongkir ke seluruh Indonesia min. pembelian Rp 150.000.
+          </p>
+        </div>
+      </section>
+
+      <!-- PRODUK SECTION -->
+      <section id="produk" aria-label="Daftar Produk" style="margin-top:2.5rem;">
+        <h2>Produk Unggulan</h2>
+        <div class="produk-grid">
+
+          <article class="produk-card">
+            <div class="card-img" style="background:#fff5f0;">🍳</div>
+            <div class="card-body">
+              <h3>Wajan Anti Lengket</h3>
+              <p>Lapisan teflon premium, tahan panas hingga 280°C. Cocok untuk semua jenis kompor.</p>
+              <p class="harga">Rp 185.000</p>
+              <button class="btn-beli">Beli Sekarang</button>
+            </div>
+          </article>
+
+          <article class="produk-card">
+            <div class="card-img" style="background:#f0f5ff;">🫕</div>
+            <div class="card-body">
+              <h3>Panci Presto 5 Liter</h3>
+              <p>Stainless steel food grade, katup pengaman ganda. Masak lebih cepat & hemat gas.</p>
+              <p class="harga">Rp 320.000</p>
+              <button class="btn-beli">Beli Sekarang</button>
+            </div>
+          </article>
+
+          <article class="produk-card">
+            <div class="card-img" style="background:#fff8e1;">🍚</div>
+            <div class="card-body">
+              <h3>Rice Cooker Digital</h3>
+              <p>Kapasitas 1,8 liter, mode memasak otomatis, dilengkapi timer & penghangat nasi.</p>
+              <p class="harga">Rp 430.000</p>
+              <button class="btn-beli">Beli Sekarang</button>
+            </div>
+          </article>
+
+          <article class="produk-card">
+            <div class="card-img" style="background:#f5fff5;">🥣</div>
+            <div class="card-body">
+              <h3>Set Mangkuk Saji</h3>
+              <p>Keramik food grade 6 pcs, motif batik Nusantara. Aman untuk microwave dan dishwasher.</p>
+              <p class="harga">Rp 210.000</p>
+              <button class="btn-beli">Beli Sekarang</button>
+            </div>
+          </article>
+
+          <article class="produk-card">
+            <div class="card-img" style="background:#fff0f5;">🔪</div>
+            <div class="card-body">
+              <h3>Set Pisau Dapur Pro</h3>
+              <p>5 pisau stainless steel + talenan bambu. Gagang ergonomis anti-slip.</p>
+              <p class="harga">Rp 275.000</p>
+              <button class="btn-beli">Beli Sekarang</button>
+            </div>
+          </article>
+
+          <article class="produk-card">
+            <div class="card-img" style="background:#f5f0ff;">🥤</div>
+            <div class="card-body">
+              <h3>Blender Multifungsi</h3>
+              <p>500W, 3 kecepatan, pisau stainless tajam. Cocok untuk jus, smoothie, dan bumbu.</p>
+              <p class="harga">Rp 395.000</p>
+              <button class="btn-beli">Beli Sekarang</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside aria-label="Informasi Toko">
+
+      <div class="sidebar-card">
+        <h2>Dapur Nusantara</h2>
+        <p class="tagline">Toko Perangkat Masak Pilihan</p>
+
+        <!-- Logo SVG -->
+        <div class="sidebar-logo" aria-hidden="true">
+          <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cooking pot icon -->
+            <ellipse cx="55" cy="70" rx="38" ry="9" fill="#c0392b" opacity=".3"/>
+            <ellipse cx="55" cy="60" rx="38" ry="10" fill="#c0392b"/>
+            <rect x="17" y="28" width="76" height="34" rx="6" fill="#c0392b"/>
+            <rect x="7" y="38" width="13" height="8" rx="4" fill="#888"/>
+            <rect x="90" y="38" width="13" height="8" rx="4" fill="#888"/>
+            <!-- Steam -->
+            <path d="M38 22 Q34 14 38 8" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M55 20 Q51 12 55 6" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M72 22 Q68 14 72 8" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <!-- Text -->
+            <text x="55" y="49" text-anchor="middle" font-family="serif" font-size="11" fill="#fff" font-weight="bold">DAPUR</text>
+          </svg>
+        </div>
+
+        <table class="info-table" aria-label="Informasi Toko">
+          <caption>Informasi Lainnya</caption>
+          <tbody>
+            <tr>
+              <td>Jam Buka</td>
+              <td>08.00 – 20.00 WIB</td>
+            </tr>
+            <tr>
+              <td>Alamat</td>
+              <td>Jl. Kuliner Raya No.12, Pekanbaru</td>
+            </tr>
+            <tr>
+              <td>Kontak</td>
+              <td>0812-5678-9100</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>info@dapurnusantara.id</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sidebar-card">
+        <h2 style="font-size:1rem;margin-bottom:0.7rem;">Kategori Produk</h2>
+        <nav aria-label="Kategori">
+          <ul class="kategori-list">
+            <li><a href="#">Wajan & Penggorengan <span>14</span></a></li>
+            <li><a href="#">Panci & Presto <span>9</span></a></li>
+            <li><a href="#">Rice Cooker <span>7</span></a></li>
+            <li><a href="#">Pisau & Talenan <span>11</span></a></li>
+            <li><a href="#">Blender & Mixer <span>6</span></a></li>
+            <li><a href="#">Wadah & Stoples <span>18</span></a></li>
+            <li><a href="#">Aksesori Dapur <span>22</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="sidebar-card" style="background:var(--red);color:#fff;">
+        <h2 style="color:#fff;font-size:1rem;margin-bottom:0.5rem;">🚚 Gratis Ongkir</h2>
+        <p style="font-size:0.83rem;line-height:1.6;color:#ffd6d6;">Min. pembelian <strong style="color:#fff;">Rp 150.000</strong>. Pengiriman ke seluruh Indonesia via JNE, J&T, dan SiCepat.</p>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <strong>Dapur Nusantara</strong> — Semua hak dilindungi. Pekanbaru, Riau.</p>
+  </footer>
+
+</body>
+</html>
